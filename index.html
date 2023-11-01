@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body onload="initialize()">
+
+    <div class="navbar">
+        <button onclick="switchMode('edit-mode')">Edit Mode</button>
+        <button onclick="switchMode('study-mode')">Study Mode</button>
+        <button onclick="switchMode('test-mode')">Test Mode</button>
+    </div>
+
+    <!-- Overlay Modal -->
+    <div id="flashcard-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="toggleModal()">&times;</span>
+            <h2>Add Flashcard</h2>
+
+            <!-- Flashcard Form -->
+            <form id="flashcardForm">
+                <label>Category:</label>
+                <select id="flashcard-category"></select> <!-- Categories will be dynamically added -->
+
+                <label>Question:</label>
+                <input type="text" id="flashcard-question" required>
+
+                <label>Technical Data:</label>
+                <textarea id="flashcard-data"></textarea>
+
+                <label>Number of Choices:</label>
+                <input type="number" id="choiceCount" min="2" max="5" value="2">
+
+                <div id="answerInputs">
+                    <!-- Multiple choice answer fields will be dynamically added based on choiceCount -->
+                </div>
+
+                <label>Correct Answer:</label>
+                <select id="correct-answer-dropdown"></select> <!-- Choices will be dynamically added -->
+
+                <label>Autofail Question:</label>
+                <input type="checkbox" id="autofail">
+
+                <label>Attach Image:</label>
+                <input type="file" id="question-image" accept="image/*" style="display:none;">
+                <div id="drop-area" ondrop="handleDrop(event)" ondragover="handleDragOver(event)">
+                    Drag & Drop Image Here
+                </div>
+
+                <button type="submit" onclick="submitFlashcardForm()">Submit</button>
+                <button onclick="toggleModal()">Close</button>
+            </form>
+        </div>
+    </div>
+
+    <br><br>
+
+    <div class="main-container">
+        <div id="sidebar">
+            <ul id="category-list"></ul>
+        </div>
+
+        <div id="content">
+
+            <div id="edit-mode" class="mode">
+                <h2>Add Category</h2>
+                <input type="text" id="categoryInput" placeholder="Category Name">
+                <button onclick="addCategory()">Add Category</button>
+
+                <h2>Add Question</h2>
+                <button onclick="toggleModal()">Add Flashcard</button>
+                <ul id="questionList"></ul>
+            </div>
+
+            <div id="study-mode" class="mode" style="display:none;">
+    <h2>Select Categories to Study</h2>
+    <div id="category-checkboxes"></div>
+    <button onclick="startStudyMode()">Start Studying</button> <!-- Added this button to start the study mode -->
+    <div id="flashcard" onclick="flipFlashcard()">
+    <div class="card">
+        <div class="card-face front"></div>
+        <div class="card-face back">what is happening</div>
+    </div>
+</div>
+
+    <button onclick="nextFlashcard()">Next</button>
+</div>
+
+
+            <div id="test-mode" class="mode" style="display:none;">
+                <h2>Select Categories for Test</h2>
+                <div id="testContent">
+                <div id="test-category-checkboxes"></div>
+                <div id="question">Question Here</div>
+                <div id="answers"></div>
+                <div id="remaining-questions"></div>
+                <button onclick="nextQuestion()">Next Question</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
